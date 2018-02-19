@@ -1,4 +1,5 @@
 ﻿using AEOMapChooser.Core.Enums;
+using AEOMapChooser.Core.Helpers;
 using AEOMapChooser.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,16 @@ namespace AEOMapChooser.WPF
 
         private void btnBreak_Click(object sender, RoutedEventArgs e)
         {
+            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
+
+            var rounds = MapChooser.GetRounds(
+                maps,
+                3,
+                3,
+                true,
+                true
+                );
+
             System.Diagnostics.Debugger.Break();
         }
 
