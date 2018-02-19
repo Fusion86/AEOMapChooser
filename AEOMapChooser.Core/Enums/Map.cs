@@ -4,7 +4,7 @@
     {
         private static int incr = 0;
         
-        public readonly MapType Type;
+        public MapType Type { get; }
 
         // Data taken from https://overwatch.gamepedia.com/Maps
         public static Map Hanamura = new Map("Hanamura", MapType.Assault);

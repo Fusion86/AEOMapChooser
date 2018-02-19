@@ -74,21 +74,26 @@ namespace AEOMapChooser.WPF
                 true
                 );
 
-            StringBuilder sb = new StringBuilder();
+            //StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < rounds.Count(); i++)
-            {
-                sb.AppendLine($"Round {i}");
+            //for (int i = 0; i < rounds.Count(); i++)
+            //{
+            //    sb.AppendLine($"Round {i}");
 
-                foreach(var map in rounds[i].Maps)
-                {
-                    sb.AppendLine($"{map.Type} - {map.Name}");
-                }
+            //    foreach(var map in rounds[i].Maps)
+            //    {
+            //        sb.AppendLine($"{map.Type} - {map.Name}");
+            //    }
 
-                sb.AppendLine();
-            }
+            //    sb.AppendLine();
+            //}
 
-            txtOutput.Text = sb.ToString();
+            //txtOutput.Text = sb.ToString();
+
+            vm.Rounds.Clear();
+
+            foreach (var round in rounds)
+                vm.Rounds.Add(round);
         }
     }
 }

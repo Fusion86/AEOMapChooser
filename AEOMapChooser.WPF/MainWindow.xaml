@@ -73,15 +73,23 @@
             </Grid>
 
             <Grid Grid.Row="2">
-                <!--<ListView BorderThickness="0">
+                <ListView x:Name="lvRounds" ItemsSource="{Binding Rounds}" BorderThickness="0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-
+                            <StackPanel>
+                                <ListView ItemsSource="{Binding Maps}" BorderThickness="0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>-->
+                </ListView>
 
-                <TextBox x:Name="txtOutput" BorderThickness="0" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+                <!--<TextBox x:Name="txtOutput" BorderThickness="0" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>-->
 
                 <Button Content="Break!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnBreak_Click"/>
             </Grid>

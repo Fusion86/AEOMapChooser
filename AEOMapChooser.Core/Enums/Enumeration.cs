@@ -7,8 +7,8 @@ namespace AEOMapChooser.Core.Enums
     // Based on https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/
     public abstract class Enumeration : IComparable
     {
-        public readonly int Id;
-        public readonly string Name;
+        public int Id { get; }
+        public string Name { get; }
 
         public Enumeration() { }
 

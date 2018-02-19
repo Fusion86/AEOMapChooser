@@ -12,10 +12,11 @@ namespace AEOMapChooser.WPF.ViewModels
         public SelectableMapType Type { get; }
         public bool IsSelected { get; set; }
 
-        public SelectableMapViewModel(Map map, SelectableMapType type)
+        public SelectableMapViewModel(Map map, SelectableMapType type, bool isSelected = false)
         {
             Map = map;
             Type = type;
+            IsSelected = isSelected;
         }
     }
 }
