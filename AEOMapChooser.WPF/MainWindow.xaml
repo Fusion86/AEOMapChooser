@@ -64,24 +64,26 @@
                     <xctk:IntegerUpDown Margin="5" Value="{Binding NumberOfRounds}" Minimum="1"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 64, 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 72, 0">
                     <TextBlock Text="Matches per round:" VerticalAlignment="Center" />
                     <xctk:IntegerUpDown Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1"/>
                 </StackPanel>
 
-                <Button Content="Generate!" HorizontalAlignment="Right" Width="60" Height="24"/>
+                <Button x:Name="btnGenerate" Content="Generate!" HorizontalAlignment="Right" Width="70" Height="20" Click="btnGenerate_Click" />
             </Grid>
 
             <Grid Grid.Row="2">
-                <ListView BorderThickness="0">
+                <!--<ListView BorderThickness="0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
 
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </ListView>-->
 
-                <Button Content="Break!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnBreak_Click" />
+                <TextBox x:Name="txtOutput" BorderThickness="0" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+
+                <Button Content="Break!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnBreak_Click"/>
             </Grid>
         </Grid>
     </Grid>

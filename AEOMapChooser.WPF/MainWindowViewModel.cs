@@ -13,8 +13,8 @@ namespace AEOMapChooser.WPF
         public ObservableCollection<SelectableMapViewModel> SelectableMaps { get; } = new ObservableCollection<SelectableMapViewModel>();
         public ObservableCollection<object> Rounds { get; } = new ObservableCollection<object>();
 
-        public int NumberOfRounds { get; set; }
-        public int NumberOfMatchesPerRound { get; set; }
+        public int NumberOfRounds { get; set; } = 3;
+        public int NumberOfMatchesPerRound { get; set; } = 3;
 
         public MainWindowViewModel()
         {

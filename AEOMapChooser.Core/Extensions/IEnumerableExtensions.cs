@@ -6,6 +6,8 @@ namespace AEOMapChooser.Core.Extensions
 {
     public static class IEnumerableExtensions
     {
+        private static Random random = new Random();
+
         public static T Random<T>(this IEnumerable<T> enumerable)
         {
             if (enumerable == null)
@@ -13,19 +15,17 @@ namespace AEOMapChooser.Core.Extensions
                 throw new ArgumentNullException(nameof(enumerable));
             }
 
-            Random r = new Random();
             var list = enumerable as IList<T> ?? enumerable.ToList();
-            return list.Count == 0 ? default(T) : list[r.Next(0, list.Count)];
+            return list.Count == 0 ? default(T) : list[random.Next(0, list.Count)];
         }
 
-        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        public static IEnumerable<T> RandomMany<T>(this IEnumerable<T> source)
         {
-            Random rnd = new Random();
             var temp = source.ToList();
 
             for (int i = 0; i < temp.Count; i++)
             {
-                int j = rnd.Next(i, temp.Count);
+                int j = random.Next(i, temp.Count);
                 yield return temp[j];
 
                 temp[j] = temp[i];

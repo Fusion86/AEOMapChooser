@@ -34,16 +34,6 @@ namespace AEOMapChooser.WPF
 
         private void btnBreak_Click(object sender, RoutedEventArgs e)
         {
-            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
-
-            var rounds = MapChooser.GetRounds(
-                maps,
-                3,
-                3,
-                true,
-                true
-                );
-
             System.Diagnostics.Debugger.Break();
         }
 
@@ -71,5 +61,34 @@ namespace AEOMapChooser.WPF
         }
 
         #endregion
+
+        private void btnGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
+
+            var rounds = MapChooser.GetRounds(
+                maps,
+                vm.NumberOfRounds,
+                vm.NumberOfMatchesPerRound,
+                true,
+                true
+                );
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < rounds.Count(); i++)
+            {
+                sb.AppendLine($"Round {i}");
+
+                foreach(var map in rounds[i].Maps)
+                {
+                    sb.AppendLine($"{map.Type} - {map.Name}");
+                }
+
+                sb.AppendLine();
+            }
+
+            txtOutput.Text = sb.ToString();
+        }
     }
 }

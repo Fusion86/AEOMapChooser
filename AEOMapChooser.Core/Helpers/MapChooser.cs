@@ -4,14 +4,13 @@ using AEOMapChooser.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AEOMapChooser.Core.Helpers
 {
     public static class MapChooser
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="mapPool"></param>
         /// <param name="numRounds"></param>
@@ -19,44 +18,54 @@ namespace AEOMapChooser.Core.Helpers
         /// <param name="tiebreaker"></param>
         /// <param name="everyMapTypeAtleastOnce"></param>
         /// <returns>Ordered list of rounds</returns>
-        public static List<Round> GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true)
+        public static Round[] GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true, bool allowDupesInOneRound = false)
         {
-            List<MapType> allTypes = mapPool.Select(x => x.Type).Distinct().ToList();
-            List<Round> rounds = new List<Round>();
-
+            IReadOnlyList<MapType> allAvailableTypes = mapPool.Select(x => x.Type).Distinct().ToList();
+            Round[] rounds = new Round[numRounds];
+            
             for (int roundNr = 0; roundNr < numRounds; roundNr++)
             {
                 Round round = new Round();
-                Stack<MapType> requiredTypes = null;
-
-                // Create stack with required types in random order
-                if (everyMapTypeAtleastOnce)
-                    requiredTypes = new Stack<MapType>(allTypes.Shuffle());
-
                 round.Maps = new Map[numMatchesPerRound];
+
+                // Create a MapType stack in random order
+                Stack<MapType> requiredTypes = new Stack<MapType>(allAvailableTypes.RandomMany());
 
                 for (int matchNr = 0; matchNr < numMatchesPerRound; matchNr++)
                 {
-                    if (everyMapTypeAtleastOnce && requiredTypes.Count > 0)
+                    MapType? type;
+                    if (requiredTypes.Count > 0)
                     {
-                        // No need to check for doubles, since every type exists at most once
-                        MapType requiredType = requiredTypes.Pop();
-                        round.Maps[matchNr] = mapPool.Where(x => x.Type == requiredType).Random();
+                        // If we don't have all the required MapTypes in our map pool then we pick the top one off the (randomly ordered) stack
+                        type = requiredTypes.Pop();
+                    }
+                    else if (matchNr > 0 && allAvailableTypes.Count > 1)
+                    {
+                        // Otherwise we pick a random maptype that is different from the previous round
+                        type = allAvailableTypes.Where(x => x != round.Maps[matchNr - 1].Type).Random();
                     }
                     else
                     {
-                        round.Maps[matchNr] = mapPool
-                            .Where(x => !round.Maps.Contains(x)) // Don't include already played maps
-                            .Random();
+                        // In case there are no required types and no previous maps then we just pick a random type
+                        type = allAvailableTypes.Random();
                     }
+
+                    var possibleMaps = mapPool.Where(x => x.Type == type); // Pick right type
+
+                    if (!allowDupesInOneRound && round.Maps.Length < possibleMaps.Count())
+                        possibleMaps = possibleMaps.Where(x => !round.Maps.Contains(x)); // Remove dupes
+                    else if (matchNr > 1)
+                        possibleMaps = possibleMaps.Where(x => x != round.Maps[matchNr - 1]); // Remove previous map
+
+                    if (possibleMaps.Count() == 0)
+                        throw new Exception("No maps available after filtering!");
+
+                    round.Maps[matchNr] = possibleMaps.Random();
                 }
 
-                if (tiebreaker && numMatchesPerRound % 2 == 0)
-                {
-                    // TODO: 
-                }
+                // TODO: Tiebreaker
 
-                rounds.Add(round);
+                rounds[roundNr] = round;
             }
 
             return rounds;
