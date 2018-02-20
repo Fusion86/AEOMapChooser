@@ -1,5 +1,8 @@
-﻿namespace AEOMapChooser.Core.Enums
+﻿using System.Diagnostics;
+
+namespace AEOMapChooser.Core.Enums
 {
+    [DebuggerDisplay("{Type} {Name}")]
     public class Map : Enumeration
     {
         private static int incr = 0;

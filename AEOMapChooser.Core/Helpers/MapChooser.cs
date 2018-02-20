@@ -18,11 +18,12 @@ namespace AEOMapChooser.Core.Helpers
         /// <param name="tiebreaker"></param>
         /// <param name="everyMapTypeAtleastOnce"></param>
         /// <returns>Ordered list of rounds</returns>
-        public static Round[] GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true, bool allowDupesInOneRound = false)
+        public static Round[] GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true)
         {
             IReadOnlyList<MapType> allAvailableTypes = mapPool.Select(x => x.Type).Distinct().ToList();
+            List<Map> alreadyPlayedMaps = new List<Map>();
             Round[] rounds = new Round[numRounds];
-            
+
             for (int roundNr = 0; roundNr < numRounds; roundNr++)
             {
                 Round round = new Round();
@@ -33,7 +34,7 @@ namespace AEOMapChooser.Core.Helpers
 
                 for (int matchNr = 0; matchNr < numMatchesPerRound; matchNr++)
                 {
-                    MapType? type;
+                    MapType type;
                     if (requiredTypes.Count > 0)
                     {
                         // If we don't have all the required MapTypes in our map pool then we pick the top one off the (randomly ordered) stack
@@ -51,16 +52,26 @@ namespace AEOMapChooser.Core.Helpers
                     }
 
                     var possibleMaps = mapPool.Where(x => x.Type == type); // Pick right type
+                    var alreadyPlayedMapsThisType = alreadyPlayedMaps.Where(x => x.Type == type).ToList();
 
-                    if (!allowDupesInOneRound && round.Maps.Length < possibleMaps.Count())
-                        possibleMaps = possibleMaps.Where(x => !round.Maps.Contains(x)); // Remove dupes
-                    else if (matchNr > 1)
-                        possibleMaps = possibleMaps.Where(x => x != round.Maps[matchNr - 1]); // Remove previous map
+                    // If we played all maps then remove the first half of the played maps from the ignore list (so that they can be played against)
+                    if (alreadyPlayedMapsThisType.Count >= possibleMaps.Count())
+                    {
+                        for (int i = 0; i < alreadyPlayedMapsThisType.Count / 2 + 1; i++)
+                        {
+                            alreadyPlayedMaps.Remove(alreadyPlayedMapsThisType[i]);
+                        }
+                    }
+
+                    // Do NOT use alreadyPlayedMapsThisType here, since that still includese the maps that we deleted in the above code
+                    possibleMaps = possibleMaps.Where(x => !alreadyPlayedMaps.Contains(x)); // Remove recently played maps from the possibleMaps list
 
                     if (possibleMaps.Count() == 0)
                         throw new Exception("No maps available after filtering!");
 
-                    round.Maps[matchNr] = possibleMaps.Random();
+                    Map map = possibleMaps.Random();
+                    round.Maps[matchNr] = map;
+                    alreadyPlayedMaps.Add(map);
                 }
 
                 // TODO: Tiebreaker

@@ -84,7 +84,6 @@ namespace AEOMapChooser.WPF
                 maps,
                 vm.NumberOfRounds,
                 vm.NumberOfMatchesPerRound,
-                true,
                 true
                 );
 

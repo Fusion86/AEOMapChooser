@@ -7,7 +7,7 @@
         xmlns:cmds="clr-namespace:AEOMapChooser.WPF.Commands"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AEO Map Chooser" Height="450" Width="600" MinHeight="450" MinWidth="600"
+        Title="AEO Map Chooser" Height="450" Width="620" MinHeight="450" MinWidth="620"
         ResizeMode="CanResizeWithGrip">
 
     <Window.CommandBindings>
@@ -78,33 +78,36 @@
             </Grid>
 
             <Grid Grid.Row="2">
-                <ListView x:Name="lvGeneratedRounds" ItemsSource="{Binding GeneratedRounds.Rounds}" BorderThickness="0" ScrollViewer.CanContentScroll="False">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <ListView ItemsSource="{Binding Maps}" BorderThickness="0">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <TextBlock Text="{Binding Name}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="lvGeneratedRounds" ItemsSource="{Binding GeneratedRounds.Rounds}" BorderThickness="0" ScrollViewer.CanContentScroll="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Maps}" BorderThickness="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Type}"/>
+                                                    <TextBlock Text="{Binding Name}" Margin="60, 0, 0, 0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
-                    <ListView.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label FontWeight="Bold" FontSize="14" Content="{Binding Name}"/>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                </ListView>
+                        <ItemsControl.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Label FontWeight="Bold" FontSize="14" Content="{Binding Name}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ItemsControl.GroupStyle>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>
