@@ -79,7 +79,7 @@
 
             <Grid Grid.Row="2">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="lvGeneratedRounds" ItemsSource="{Binding GeneratedRounds.Rounds}" BorderThickness="0" ScrollViewer.CanContentScroll="False">
+                    <ItemsControl x:Name="lvGeneratedRounds" ItemsSource="{Binding GeneratedRounds}" BorderThickness="0" ScrollViewer.CanContentScroll="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

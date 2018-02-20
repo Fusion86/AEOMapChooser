@@ -18,11 +18,11 @@ namespace AEOMapChooser.Core.Helpers
         /// <param name="tiebreaker"></param>
         /// <param name="everyMapTypeAtleastOnce"></param>
         /// <returns>Ordered list of rounds</returns>
-        public static Round[] GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true)
+        public static List<Round> GetRounds(IEnumerable<Map> mapPool, int numRounds, int numMatchesPerRound, bool tiebreaker = false, bool everyMapTypeAtleastOnce = true)
         {
             IReadOnlyList<MapType> allAvailableTypes = mapPool.Select(x => x.Type).Distinct().ToList();
             List<Map> alreadyPlayedMaps = new List<Map>();
-            Round[] rounds = new Round[numRounds];
+            List<Round> rounds = new List<Round>();
 
             for (int roundNr = 0; roundNr < numRounds; roundNr++)
             {
@@ -75,8 +75,8 @@ namespace AEOMapChooser.Core.Helpers
                 }
 
                 // TODO: Tiebreaker
-
-                rounds[roundNr] = round;
+                
+                rounds.Add(round);
             }
 
             return rounds;

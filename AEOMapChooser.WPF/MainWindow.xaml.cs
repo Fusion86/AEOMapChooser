@@ -1,5 +1,8 @@
 ﻿using AEOMapChooser.Core.Enums;
+using AEOMapChooser.Core.Extensions;
 using AEOMapChooser.Core.Helpers;
+using AEOMapChooser.Core.Models;
+using AEOMapChooser.WPF.Models;
 using AEOMapChooser.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -73,12 +76,12 @@ namespace AEOMapChooser.WPF
 
         private void cmdGenerateRounds_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = vm.SelectableMaps.Where(x => x.IsSelected).Count() > 1;
+            e.CanExecute = vm.SelectableMaps.Where(x => x.IsSelected && x.Type != SelectableMapType.Tiebreaker).Count() > 1;
         }
 
         private void cmdGenerateRounds_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
+            var maps = vm.SelectableMaps.Where(x => x.IsSelected && x.Type != SelectableMapType.Tiebreaker).Select(x => x.Map);
 
             var rounds = MapChooser.GetRounds(
                 maps,
@@ -87,7 +90,17 @@ namespace AEOMapChooser.WPF
                 true
                 );
 
-            vm.GeneratedRounds.SetRounds(rounds);
+            vm.GeneratedRounds.Clear();
+
+            for (int i = 0; i < rounds.Count; i++)
+            {
+                string name = "Round " + (i + 1);
+                vm.GeneratedRounds.Add(new RoundViewModel(name, rounds[i]));
+            }
+
+            var tiebreakers = vm.SelectableMaps.Where(x => x.IsSelected && x.Type == SelectableMapType.Tiebreaker).Select(x => x.Map);
+            if (tiebreakers.Count() > 0)
+                vm.GeneratedRounds.Add(new RoundViewModel("Tiebreaker", new Round() { Maps = new[] { tiebreakers.Random() } }));
         }
 
         private void iudNumRounds_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

@@ -84,7 +84,6 @@
     </ApplicationDefinition>
     <Compile Include="Commands\CustomCommands.cs" />
     <Compile Include="Models\SelectableMapType.cs" />
-    <Compile Include="ViewModels\GeneratedRoundsViewModel.cs" />
     <Compile Include="ViewModels\RoundViewModel.cs" />
     <Compile Include="ViewModels\SelectableMapViewModel.cs" />
     <Page Include="MainWindow.xaml">
