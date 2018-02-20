@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AEOMapChooser.WPF"
+        xmlns:cmds="clr-namespace:AEOMapChooser.WPF.Commands"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="AEO Map Chooser" Height="450" Width="600" MinHeight="450" MinWidth="600"
         ResizeMode="CanResizeWithGrip">
+
+    <Window.CommandBindings>
+        <CommandBinding x:Name="cmdGenerateRounds" Command="cmds:CustomCommands.GenerateRounds" CanExecute="cmdGenerateRounds_CanExecute" Executed="cmdGenerateRounds_Executed"/>
+    </Window.CommandBindings>
 
     <Window.DataContext>
         <local:MainWindowViewModel x:Name="vm" />
@@ -69,7 +74,7 @@
                     <xctk:IntegerUpDown Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1"/>
                 </StackPanel>
 
-                <Button x:Name="btnGenerate" Content="Generate!" HorizontalAlignment="Right" Width="70" Height="20" Click="btnGenerate_Click" />
+                <Button Content="Generate!" HorizontalAlignment="Right" Width="70" Height="20" Command="cmds:CustomCommands.GenerateRounds" />
             </Grid>
 
             <Grid Grid.Row="2">
@@ -88,10 +93,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
-                <!--<TextBox x:Name="txtOutput" BorderThickness="0" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>-->
-
-                <Button Content="Break!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnBreak_Click"/>
             </Grid>
         </Grid>
     </Grid>

@@ -64,6 +64,16 @@ namespace AEOMapChooser.WPF
 
         private void btnGenerate_Click(object sender, RoutedEventArgs e)
         {
+            cmdGenerateRounds_Executed(sender, null);
+        }
+
+        private void cmdGenerateRounds_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = vm.SelectableMaps.Where(x => x.IsSelected).Count() > 1;
+        }
+
+        private void cmdGenerateRounds_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
 
             var rounds = MapChooser.GetRounds(
@@ -73,22 +83,6 @@ namespace AEOMapChooser.WPF
                 true,
                 true
                 );
-
-            //StringBuilder sb = new StringBuilder();
-
-            //for (int i = 0; i < rounds.Count(); i++)
-            //{
-            //    sb.AppendLine($"Round {i}");
-
-            //    foreach(var map in rounds[i].Maps)
-            //    {
-            //        sb.AppendLine($"{map.Type} - {map.Name}");
-            //    }
-
-            //    sb.AppendLine();
-            //}
-
-            //txtOutput.Text = sb.ToString();
 
             vm.Rounds.Clear();
 
