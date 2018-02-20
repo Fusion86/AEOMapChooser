@@ -1,23 +1,14 @@
-﻿using AEOMapChooser.Core.Enums;
-using AEOMapChooser.Core.Extensions;
+﻿using AEOMapChooser.Core.Extensions;
 using AEOMapChooser.Core.Helpers;
 using AEOMapChooser.Core.Models;
 using AEOMapChooser.WPF.Models;
 using AEOMapChooser.WPF.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AEOMapChooser.WPF
 {
@@ -67,7 +58,7 @@ namespace AEOMapChooser.WPF
                 map.IsSelected = false;
         }
 
-        #endregion
+        #endregion Selectable Maps Group Header
 
         private void btnGenerate_Click(object sender, RoutedEventArgs e)
         {

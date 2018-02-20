@@ -6,11 +6,12 @@ namespace AEOMapChooser.Core.Enums
     public class Map : Enumeration
     {
         private static int incr = 0;
-        
+
         public MapType Type { get; }
 
         // Data taken from https://overwatch.gamepedia.com/Maps
         public static Map Hanamura = new Map("Hanamura", MapType.Assault);
+
         public static Map HorizonLunarColony = new Map("Horizon Lunar Colony", MapType.Assault);
         public static Map TempleOfAnubis = new Map("Temple of Anubis", MapType.Assault);
         public static Map VolskayaIndustries = new Map("Volskaya Industries", MapType.Assault);
@@ -31,7 +32,9 @@ namespace AEOMapChooser.Core.Enums
         public static Map Nepal = new Map("Nepal", MapType.Control);
         public static Map Oasis = new Map("Oasis", MapType.Control);
 
-        public Map() { }
+        public Map()
+        {
+        }
 
         private Map(string name, MapType type) : base(incr++, name)
         {

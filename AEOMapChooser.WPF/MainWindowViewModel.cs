@@ -1,8 +1,6 @@
 ﻿using AEOMapChooser.Core.Enums;
-using AEOMapChooser.Core.Models;
 using AEOMapChooser.WPF.Models;
 using AEOMapChooser.WPF.ViewModels;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 

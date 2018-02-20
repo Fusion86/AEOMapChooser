@@ -10,7 +10,9 @@ namespace AEOMapChooser.Core.Enums
         public int Id { get; }
         public string Name { get; }
 
-        public Enumeration() { }
+        public Enumeration()
+        {
+        }
 
         protected Enumeration(int id, string name)
         {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AEOMapChooser.Core.Enums
+﻿namespace AEOMapChooser.Core.Enums
 {
     public enum MapType
     {
