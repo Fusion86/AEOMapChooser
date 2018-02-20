@@ -12,6 +12,7 @@
 
     <Window.CommandBindings>
         <CommandBinding x:Name="cmdGenerateRounds" Command="cmds:CustomCommands.GenerateRounds" CanExecute="cmdGenerateRounds_CanExecute" Executed="cmdGenerateRounds_Executed"/>
+        <CommandBinding x:Name="cmdCopyRoundsAsMarkdown" Command="cmds:CustomCommands.CopyRoundsAsMarkdown" CanExecute="cmdCopyRoundsAsMarkdown_CanExecute" Executed="cmdCopyRoundsAsMarkdown_Executed"/>
     </Window.CommandBindings>
 
     <Window.DataContext>
@@ -66,12 +67,12 @@
             <Grid Grid.Row="0" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Number of rounds:" VerticalAlignment="Center" />
-                    <xctk:IntegerUpDown x:Name="iudNumRounds" Margin="5" Value="{Binding NumberOfRounds}" Minimum="1" ValueChanged="iudNumRounds_ValueChanged"/>
+                    <xctk:IntegerUpDown x:Name="iudNumRounds" Margin="5" Value="{Binding NumberOfRounds}" Minimum="1" ValueChanged="generatorInput_ValueChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 72, 0">
                     <TextBlock Text="Matches per round:" VerticalAlignment="Center" />
-                    <xctk:IntegerUpDown x:Name="iudNumMatchesPerRound" Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1" ValueChanged="iudNumRounds_ValueChanged"/>
+                    <xctk:IntegerUpDown x:Name="iudNumMatchesPerRound" Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1" ValueChanged="generatorInput_ValueChanged"/>
                 </StackPanel>
 
                 <Button Content="Generate!" HorizontalAlignment="Right" Width="70" Height="20" Command="cmds:CustomCommands.GenerateRounds" />
@@ -106,6 +107,12 @@
                                 </GroupStyle.HeaderTemplate>
                             </GroupStyle>
                         </ItemsControl.GroupStyle>
+
+                        <ItemsControl.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Copy as markdown" Command="cmds:CustomCommands.CopyRoundsAsMarkdown"/>
+                            </ContextMenu>
+                        </ItemsControl.ContextMenu>
                     </ItemsControl>
                 </ScrollViewer>
             </Grid>

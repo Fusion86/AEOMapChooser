@@ -36,10 +36,53 @@ namespace AEOMapChooser.WPF
             lvGeneratedRoundsView.GroupDescriptions.Add(generatedRoundsGroupDescription);
         }
 
-        private void btnBreak_Click(object sender, RoutedEventArgs e)
+        #region Commands
+
+        private void cmdGenerateRounds_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            System.Diagnostics.Debugger.Break();
+            e.CanExecute = vm.SelectableMaps.Where(x => x.IsSelected).Count() > 1;
         }
+
+        private void cmdGenerateRounds_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
+
+            var rounds = MapChooser.GetRounds(
+                maps,
+                vm.NumberOfRounds,
+                vm.NumberOfMatchesPerRound,
+                true
+                );
+
+            vm.GeneratedRounds.SetRounds(rounds);
+        }
+
+        private void cmdCopyRoundsAsMarkdown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = vm.GeneratedRounds.Rounds.Count > 0;
+        }
+
+        private void cmdCopyRoundsAsMarkdown_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int roundNr = 0; roundNr < vm.GeneratedRounds.Rounds.Count; roundNr++)
+            {
+                sb.AppendLine($"**Round {roundNr + 1}**");
+
+                for (int mapNr = 0; mapNr < vm.GeneratedRounds.Rounds[roundNr].Maps.Length; mapNr++)
+                {
+                    Map map = vm.GeneratedRounds.Rounds[roundNr].Maps[mapNr];
+                    sb.Append($"| *{map.Type}:* ");
+                    sb.AppendLine(map.Name);
+                }
+                sb.AppendLine();
+            }
+
+            Clipboard.SetText(sb.ToString());
+        }
+
+        #endregion
 
         #region Selectable Maps Group Header
 
@@ -71,26 +114,7 @@ namespace AEOMapChooser.WPF
             cmdGenerateRounds_Executed(sender, null);
         }
 
-        private void cmdGenerateRounds_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = vm.SelectableMaps.Where(x => x.IsSelected).Count() > 1;
-        }
-
-        private void cmdGenerateRounds_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            var maps = vm.SelectableMaps.Where(x => x.IsSelected).Select(x => x.Map);
-
-            var rounds = MapChooser.GetRounds(
-                maps,
-                vm.NumberOfRounds,
-                vm.NumberOfMatchesPerRound,
-                true
-                );
-
-            vm.GeneratedRounds.SetRounds(rounds);
-        }
-
-        private void iudNumRounds_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void generatorInput_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             cmdGenerateRounds_Executed(sender, null);
         }
