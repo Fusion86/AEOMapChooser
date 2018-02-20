@@ -7,7 +7,7 @@ namespace AEOMapChooser.Core.Models
     /// </summary>
     public class Round
     {
-        public Map[] Maps { get; internal set; }
+        public Map[] Maps { get; set; }
         public Map Tiebreaker { get; internal set; }
 
         public bool HasTiebreaker => Tiebreaker != null;
