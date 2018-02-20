@@ -11,5 +11,13 @@ namespace AEOMapChooser.WPF.Commands
             typeof(CustomCommands),
             null
         );
+
+        public static readonly RoutedUICommand CopyGeneratedRoundsMarkdown = new RoutedUICommand
+        (
+            "Copy markdown",
+            "Copy markdown",
+            typeof(CustomCommands),
+            null
+        );
     }
 }
