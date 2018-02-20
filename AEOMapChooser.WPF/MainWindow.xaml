@@ -66,32 +66,44 @@
             <Grid Grid.Row="0" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Number of rounds:" VerticalAlignment="Center" />
-                    <xctk:IntegerUpDown Margin="5" Value="{Binding NumberOfRounds}" Minimum="1"/>
+                    <xctk:IntegerUpDown x:Name="iudNumRounds" Margin="5" Value="{Binding NumberOfRounds}" Minimum="1" ValueChanged="iudNumRounds_ValueChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 72, 0">
                     <TextBlock Text="Matches per round:" VerticalAlignment="Center" />
-                    <xctk:IntegerUpDown Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1"/>
+                    <xctk:IntegerUpDown x:Name="iudNumMatchesPerRound" Margin="5" Value="{Binding NumberOfMatchesPerRound}" Minimum="1" ValueChanged="iudNumRounds_ValueChanged"/>
                 </StackPanel>
 
                 <Button Content="Generate!" HorizontalAlignment="Right" Width="70" Height="20" Command="cmds:CustomCommands.GenerateRounds" />
             </Grid>
 
             <Grid Grid.Row="2">
-                <ListView x:Name="lvRounds" ItemsSource="{Binding Rounds}" BorderThickness="0">
+                <ListView x:Name="lvGeneratedRounds" ItemsSource="{Binding GeneratedRounds.Rounds}" BorderThickness="0" ScrollViewer.CanContentScroll="False">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
                                 <ListView ItemsSource="{Binding Maps}" BorderThickness="0">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name}"/>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </Grid>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label FontWeight="Bold" FontSize="14" Content="{Binding Name}"/>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
                 </ListView>
             </Grid>
         </Grid>
