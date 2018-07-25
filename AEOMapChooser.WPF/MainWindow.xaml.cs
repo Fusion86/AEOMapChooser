@@ -2,7 +2,7 @@
 using AEOMapChooser.Core.Extensions;
 using AEOMapChooser.Core.Helpers;
 using AEOMapChooser.Core.Models;
-using AEOMapChooser.WPF.Models;
+using AEOMapChooser.WPF.Enums;
 using AEOMapChooser.WPF.ViewModels;
 using System.Collections.Generic;
 using System.Linq;

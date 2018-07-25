@@ -1,5 +1,5 @@
 ﻿using AEOMapChooser.Core.Enums;
-using AEOMapChooser.WPF.Models;
+using AEOMapChooser.WPF.Enums;
 using System.ComponentModel;
 
 namespace AEOMapChooser.WPF.ViewModels

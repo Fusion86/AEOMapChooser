@@ -2,6 +2,7 @@
 {
     public enum MapType
     {
+        Arcade,
         Assault,
         Control,
         Escort,
